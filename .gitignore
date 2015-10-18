@@ -2,6 +2,10 @@
 *.classpath
 *.project
 target
+.classpath
+.project
+.idea
+.settings
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
