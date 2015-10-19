@@ -4,6 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -96,6 +100,38 @@ public class CommonUtils {
 		}
 		
 		return page.toString();
+	}
+	
+	/** 
+	 * Converts a comma separated string to a list
+	 * @param s String containing the comma separated values
+	 * @return List<String> containing the contents of the string
+	 */
+	public static List<String> convertCsvToList(String s) { 
+		
+		List<String> stringList = new ArrayList<String>();
+		String [] values = s.split(",");
+		for (String val : values) { 
+			stringList.add(val.trim());
+		}
+		
+		return stringList;
+	}
+	
+	/** 
+	 * Converts a comma separated String into a set
+	 * @param s String containing the comma separated values
+	 * @return Set<String> containing the values
+	 */
+	public static Set<String> convertCsvToSet(String s) { 
+		
+		List<String> stringList = convertCsvToList(s);
+		Set<String> set = new HashSet<String>();
+		for (String list : stringList) { 
+			set.add(list);
+		}
+		
+		return set;
 	}
 	
 	/** 
