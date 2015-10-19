@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jomdb.entity.Episode;
 import org.jomdb.entity.MiniEpisode;
 import org.jomdb.utils.CommonUtils;
 import org.json.simple.JSONArray;
@@ -14,6 +15,7 @@ import org.json.simple.parser.ParseException;
  * Fetches information regarding a serial and its episodes from IMDB
  * @author Rupak Chakraborty
  * @since 19 October,2015
+ * TODO - Add IMDB ID to enable search
  */
 
 public class SerialFetch {
@@ -138,20 +140,13 @@ public class SerialFetch {
 		List<MiniEpisode> minEpisodes = null; 
 		
 		if (seasonNum < 0) {  
-			
 			seasonNum = 1;
 		}
-		
 		if (episodeNum < 0) {  
-			
 			url = getLinkForSeason(); 
-			
 		} else { 
-			
 			url = getLinkForSeasonEpisode(); 
-			
 		}
-		
 		try {
 			page = CommonUtils.getPageResponse(url);
 			parsedResponse = CommonUtils.getJSONPage(page);
@@ -166,5 +161,78 @@ public class SerialFetch {
 		}
 		
 		return minEpisodes;
+	}
+	
+	/** 
+	 * Defines the full pipeline for Processing a serial episode
+	 * @return Episode Object containing the necessary fields
+	 */
+	public Episode getEpisodeFullPipeline() { 
+		
+		String url;
+		String page;
+		JSONObject parsedResponse;
+		Episode episode = null; 
+		
+		if (seasonNum < 0) {  
+			seasonNum = 1;
+		}
+		if (episodeNum < 0) {  
+			url = getLinkForSeason(); 
+		} else { 
+			url = getLinkForSeasonEpisode(); 
+		}
+		try {
+			page = CommonUtils.getPageResponse(url);
+			parsedResponse = CommonUtils.getJSONPage(page);
+			if (CommonUtils.checkResponse(parsedResponse)) { 
+				episode = getEpisodeObject(parsedResponse);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return episode;
+
+	}
+	
+	/** 
+	 * Returns the Episode object from a given JSON
+	 * @param json JSONObject containing the response to the episode
+	 * @return Episode object containing the necessary fields
+	 */
+	public Episode getEpisodeObject(JSONObject json) { 
+		
+		Episode episode = new Episode(); 
+
+		episode.setTitle((String) json.get("Title"));
+		episode.setYear(Integer.valueOf((String) json.get("Year")));
+		episode.setRated((String) json.get("Rated"));
+		episode.setReleased((String) json.get("Released"));
+		episode.setRuntime((String) json.get("Runtime"));
+		episode.setGenre((String) json.get("Genre"));
+		episode.setDirector((String) json.get("Director"));
+		episode.setWriter((String) json.get("Writer"));
+		episode.setActors((String) json.get("Actors"));
+		episode.setPlot((String) json.get("Plot"));
+		episode.setLanguage((String) json.get("Language"));
+		episode.setCountry((String) json.get("Country"));
+		episode.setAwards((String) json.get("Awards"));
+		episode.setPoster((String) json.get("Poster"));
+		episode.setImdbRating(Double.valueOf((String) json.get("imdbRating")));
+		episode.setImdbVotes(CommonUtils.getLongFromString((String) json.get("imdbVotes")));
+		episode.setImdbId((String) json.get("imdbID"));
+		episode.setType((String) json.get("Type"));
+		episode.setSeason(Integer.valueOf((String) json.get("Season")));
+		episode.setEpisode(Integer.valueOf((String) json.get("Episode")));
+		
+		return episode;
+	}
+	
+	public static void main(String args[]) { 
+		SerialFetch sf = new SerialFetch("Game of thrones", 1,3);
+		System.out.println(sf.getEpisodeFullPipeline());
 	}
 }

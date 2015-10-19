@@ -174,7 +174,7 @@ public class MovieFetch {
 	 * @param json JSONObject containing the movie information
 	 * @return Movie object containing the json information
 	 */
-	public Movie getMovieObject(JSONObject json) {  
+	public static Movie getMovieObject(JSONObject json) {  
 
 		Movie movie = new Movie(); 
 
