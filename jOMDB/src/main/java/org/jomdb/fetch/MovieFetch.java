@@ -33,8 +33,8 @@ public class MovieFetch {
 	final private String typeParam = "&type="; 
 	
 	/** 
-	 * 
-	 * @param title
+	 * public constructor initialize the title of the movie
+	 * @param title String containing the title
 	 */
 	public MovieFetch(String title) { 
 
@@ -43,9 +43,9 @@ public class MovieFetch {
 	} 
 	
 	/** 
-	 * 
-	 * @param title
-	 * @param year
+	 * public constructor to initialize the title and year of the given movie
+	 * @param title String containing the title
+	 * @param year Integer containing the year
 	 */
 	public MovieFetch(String title,int year) { 
 
@@ -55,9 +55,9 @@ public class MovieFetch {
 	} 
 	
 	/** 
-	 * 
-	 * @param imdbId
-	 * @param imdbFlag
+	 * public constructor to initialize the IMDB ID and the flag
+	 * @param imdbId String containing the IMDB ID
+	 * @param imdbFlag boolean containing the flag value
 	 */
 	public MovieFetch(String imdbId,boolean imdbFlag) {  
 
@@ -66,10 +66,10 @@ public class MovieFetch {
 	} 
 	
 	/** 
-	 * 
-	 * @param imdbId
-	 * @param year
-	 * @param imdbFlag
+	 * public constructor to initialize the movie fetch object
+	 * @param imdbId String containing the IMDB ID
+	 * @param year Integer containing the inception year
+	 * @param imdbFlag boolean containing flag value
 	 */
 	public MovieFetch(String imdbId,int year,boolean imdbFlag) {  
 
@@ -79,8 +79,8 @@ public class MovieFetch {
 	}
 	
 	/** 
-	 * 
-	 * @return
+	 * Returns a complete OMDB url without the year information
+	 * @return String containing the url
 	 */
 	private String getLinkWithoutYear() { 
 
@@ -91,8 +91,8 @@ public class MovieFetch {
 	}
 	
 	/** 
-	 * 
-	 * @return
+	 * Returns a complete OMDB url containing the year information
+	 * @return String containing the entire url
 	 */
 	private String getLinkWithYear() { 
 
@@ -103,8 +103,8 @@ public class MovieFetch {
 	}
 	
 	/** 
-	 * 
-	 * @return
+	 * Returns the value of the tomato flag
+	 * @return String containing the tomato flag value
 	 */
 	public String getTomatoFlag() {  
 
@@ -112,8 +112,8 @@ public class MovieFetch {
 	}
 	
 	/** 
-	 * 
-	 * @param flag
+	 * Sets the value of the tomato flag
+	 * @param flag boolean containing the tomato flag value
 	 */
 	public void setTomatoFlag(boolean flag) { 
 		if (flag == true) { 
@@ -122,9 +122,9 @@ public class MovieFetch {
 	}
 	
 	/** 
-	 * 
-	 * @param tomatoFlag
-	 * @return
+	 * Defines the pipeline for fetching the movie information along with the rotten tomatoes info 
+	 * @param tomatoFlag boolean containing the tomatoFlag
+	 * @return Movie object containing the movie information
 	 */
 	public Movie movieGetPipeline(boolean tomatoFlag) { 
 
@@ -133,8 +133,8 @@ public class MovieFetch {
 	}
 	
 	/** 
-	 * 
-	 * @return
+	 * Defines the movie processing pipeline 
+	 * @return Movie object containing the movie information
 	 */
 	public Movie movieGetPipeline() { 
 
@@ -170,9 +170,9 @@ public class MovieFetch {
 	}
 	
 	/** 
-	 * 
-	 * @param json
-	 * @return
+	 * Given a JSON containing the movie information converts it into a movie object
+	 * @param json JSONObject containing the movie information
+	 * @return Movie object containing the json information
 	 */
 	public Movie getMovieObject(JSONObject json) {  
 
@@ -202,9 +202,9 @@ public class MovieFetch {
 	}
 	
 	/** 
-	 * 
-	 * @param json
-	 * @param movie
+	 * Given a movie object sets the movie field values
+	 * @param json JSONObject containing the movie information
+	 * @param movie Movie object which is to be populated
 	 */
 	public void setTomatoFields(JSONObject json,Movie movie) { 
 
