@@ -10,8 +10,8 @@ import org.json.simple.parser.ParseException;
 /** 
  * Retrieves information about a given movie from IMDB based using the OMDB API
  * @author Rupak Chakraborty
- *
- * TODO - Add rotten tomato support and search by imdb id
+ * @since 19 October, 2015
+ * TODO - search by imdb id
  */
 public class MovieFetch {
 
@@ -31,33 +31,57 @@ public class MovieFetch {
 	final private String tomatoesParam = "&tomatoes=";
 	final private String responseParam = "&r=";
 	final private String typeParam = "&type="; 
-
+	
+	/** 
+	 * 
+	 * @param title
+	 */
 	public MovieFetch(String title) { 
 
 		this.title = title.trim();
 		this.title = CommonUtils.getURLFormatSpace(this.title);
 	} 
-
+	
+	/** 
+	 * 
+	 * @param title
+	 * @param year
+	 */
 	public MovieFetch(String title,int year) { 
 
 		this.title = title.trim();
 		this.title = CommonUtils.getURLFormatSpace(this.title);
 		this.year = year;
 	} 
-
+	
+	/** 
+	 * 
+	 * @param imdbId
+	 * @param imdbFlag
+	 */
 	public MovieFetch(String imdbId,boolean imdbFlag) {  
 
 		this.imdbId = imdbId;
 		this.imdbFlag = true;
 	} 
-
+	
+	/** 
+	 * 
+	 * @param imdbId
+	 * @param year
+	 * @param imdbFlag
+	 */
 	public MovieFetch(String imdbId,int year,boolean imdbFlag) {  
 
 		this.imdbId = imdbId.trim();
 		this.imdbFlag = true;
 		this.year = year;
 	}
-
+	
+	/** 
+	 * 
+	 * @return
+	 */
 	private String getLinkWithoutYear() { 
 
 		String url = baseUrl + titleParam + title + plotParam + plot + typeParam + type +
@@ -65,7 +89,11 @@ public class MovieFetch {
 
 		return url;
 	}
-
+	
+	/** 
+	 * 
+	 * @return
+	 */
 	private String getLinkWithYear() { 
 
 		String url = baseUrl + titleParam + title + plotParam + plot + yearParam + year +
@@ -73,24 +101,41 @@ public class MovieFetch {
 
 		return url;
 	}
-
+	
+	/** 
+	 * 
+	 * @return
+	 */
 	public String getTomatoFlag() {  
 
 		return this.tomatoFlag;
 	}
-
+	
+	/** 
+	 * 
+	 * @param flag
+	 */
 	public void setTomatoFlag(boolean flag) { 
 		if (flag == true) { 
 			this.tomatoFlag = "true";
 		}
 	}
-
+	
+	/** 
+	 * 
+	 * @param tomatoFlag
+	 * @return
+	 */
 	public Movie movieGetPipeline(boolean tomatoFlag) { 
 
 		setTomatoFlag(tomatoFlag);
 		return movieGetPipeline();
 	}
-
+	
+	/** 
+	 * 
+	 * @return
+	 */
 	public Movie movieGetPipeline() { 
 
 		String url = ""; 
@@ -123,7 +168,12 @@ public class MovieFetch {
 
 		return movie;
 	}
-
+	
+	/** 
+	 * 
+	 * @param json
+	 * @return
+	 */
 	public Movie getMovieObject(JSONObject json) {  
 
 		Movie movie = new Movie(); 
@@ -150,7 +200,12 @@ public class MovieFetch {
 
 		return movie;
 	}
-
+	
+	/** 
+	 * 
+	 * @param json
+	 * @param movie
+	 */
 	public void setTomatoFields(JSONObject json,Movie movie) { 
 
 		movie.setTomatoMeter(Long.valueOf((String) json.get("tomatoMeter")));
@@ -168,6 +223,7 @@ public class MovieFetch {
 		movie.setBoxOffice((String) json.get("BoxOffice"));
 		movie.setWebsite((String) json.get("Website"));
 	}
+	
 	public static void main(String args[]) { 
 
 		MovieFetch movie = new MovieFetch("Avengers");
